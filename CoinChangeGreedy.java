@@ -1,8 +1,8 @@
 public class CoinChangeGreedy {
 
     public static void main(String[] args) {
-        int[] denominations = {1, 2, 5, 10, 20, 50, 100, 500, 1000};
-        int amount = 93;
+        double[] denominations = {0.05, 0.10, 0.25, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00, 100.00};
+        double amount = 3527.45; // Montante em reais e centavos
 
         int[] change = findMin(denominations, amount);
 
@@ -11,7 +11,7 @@ public class CoinChangeGreedy {
     }
 
     // Greedy approach to find minimum denominations
-    public static int[] findMin(int[] denominations, int amount) {
+    public static int[] findMin(double[] denominations, double amount) {
         int[] result = new int[denominations.length];
         int index = denominations.length - 1;
 
@@ -19,6 +19,7 @@ public class CoinChangeGreedy {
             if (denominations[index] <= amount) {
                 result[index]++;
                 amount -= denominations[index];
+                amount = Math.round(amount * 100.0) / 100.0; // Arredonda para lidar com precisão de ponto flutuante
             } else {
                 index--;
             }
@@ -28,10 +29,12 @@ public class CoinChangeGreedy {
     }
 
     // Helper method to print the denominations used
-    public static void printChange(int[] change, int[] denominations) {
+    public static void printChange(int[] change, double[] denominations) {
+        String[] currencyNames = {"R$0.05", "R$0.10", "R$0.25", "R$0.50", "R$1", "R$2", "R$5", "R$10", "R$20", "R$50", "R$100"};
+
         for (int i = 0; i < change.length; i++) {
-            for (int j = 0; j < change[i]; j++) {
-                System.out.print(denominations[i] + " ");
+            if (change[i] > 0) {
+                System.out.println(currencyNames[i] + ": " + change[i] + " quantidades");
             }
         }
     }
