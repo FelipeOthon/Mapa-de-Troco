@@ -1,40 +1,40 @@
 public class CoinChangeGreedy {
 
     public static void main(String[] args) {
-        double[] denominations = {0.05, 0.10, 0.25, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00, 100.00};
-        double amount = 3527.45; // Montante em reais e centavos
+        double[] denominacoes = {0.05, 0.10, 0.25, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00, 100.00};
+        double valor = 3527.45; // Valor em reais e centavos
 
-        int[] change = findMin(denominations, amount);
+        int[] troco = encontrarMinimo(denominacoes, valor);
 
-        System.out.println("Denominations used to make change for " + amount + ":");
-        printChange(change, denominations);
+        System.out.println("Moedas utilizadas para dar troco de " + valor + ":");
+        imprimirTroco(troco, denominacoes);
     }
 
-    // Greedy approach to find minimum denominations
-    public static int[] findMin(double[] denominations, double amount) {
-        int[] result = new int[denominations.length];
-        int index = denominations.length - 1;
+    // Abordagem gananciosa para encontrar a quantidade mínima de moedas
+    public static int[] encontrarMinimo(double[] denominacoes, double valor) {
+        int[] resultado = new int[denominacoes.length];
+        int indice = denominacoes.length - 1;
 
-        while (index >= 0 && amount > 0) {
-            if (denominations[index] <= amount) {
-                result[index]++;
-                amount -= denominations[index];
-                amount = Math.round(amount * 100.0) / 100.0; // Arredonda para lidar com precisão de ponto flutuante
+        while (indice >= 0 && valor > 0) {
+            if (denominacoes[indice] <= valor) {
+                resultado[indice]++;
+                valor -= denominacoes[indice];
+                valor = Math.round(valor * 100.0) / 100.0; // Arredonda para lidar com precisão de ponto flutuante
             } else {
-                index--;
+                indice--;
             }
         }
 
-        return result;
+        return resultado;
     }
 
-    // Helper method to print the denominations used
-    public static void printChange(int[] change, double[] denominations) {
-        String[] currencyNames = {"R$0.05", "R$0.10", "R$0.25", "R$0.50", "R$1", "R$2", "R$5", "R$10", "R$20", "R$50", "R$100"};
+    // Método auxiliar para imprimir as denominações utilizadas
+    public static void imprimirTroco(int[] troco, double[] denominacoes) {
+        String[] nomesMoedas = {"R$0.05", "R$0.10", "R$0.25", "R$0.50", "R$1", "R$2", "R$5", "R$10", "R$20", "R$50", "R$100"};
 
-        for (int i = 0; i < change.length; i++) {
-            if (change[i] > 0) {
-                System.out.println(currencyNames[i] + ": " + change[i] + " quantidades");
+        for (int i = 0; i < troco.length; i++) {
+            if (troco[i] > 0) {
+                System.out.println(nomesMoedas[i] + ": " + troco[i] + " quantidade(s)");
             }
         }
     }
